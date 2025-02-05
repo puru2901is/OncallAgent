@@ -1,0 +1,282 @@
+Started by user Sriram Sridhar
+[Pipeline] Start of Pipeline
+[Pipeline] echo
+[WARNING] label option is deprecated. To use a static pod template, use the 'inheritFrom' option.
+[Pipeline] podTemplate
+[Pipeline] {
+[Pipeline] node
+Still waiting to schedule task
+‘hypertrail-java-jhpz0’ is offline
+Agent hypertrail-java-h9vcb is provisioned from template hypertrail-java
+---
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  annotations:
+    kubernetes.jenkins.io/last-refresh: "1737439426959"
+    cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+  labels:
+    runway-account: "realtime-prod-runner"
+    jenkins/label-digest: "06129166441d6c20536dd98c88ac24bb06e230a8"
+    jenkins/label: "hypertrail-java"
+    kubernetes.jenkins.io/controller: "http___realtime-headless_runway_ci_8080x"
+  name: "hypertrail-java-h9vcb"
+  namespace: "realtime-prod-runner"
+spec:
+  containers:
+  - command:
+    - "dockerd"
+    - "-H"
+    - "tcp://0.0.0.0:2375"
+    - "--tls=false"
+    env:
+    - name: "DOCKER_HOST"
+      value: "tcp://localhost:2375"
+    image: "792634465463.dkr.ecr.us-east-1.amazonaws.com/dind:v1"
+    imagePullPolicy: "IfNotPresent"
+    name: "dind-daemon"
+    resources: {}
+    securityContext:
+      privileged: true
+    tty: false
+    volumeMounts:
+    - mountPath: "/var/lib/docker"
+      name: "volume-1"
+      readOnly: false
+    - mountPath: "/root"
+      name: "volume-0"
+      readOnly: false
+    workingDir: "/root"
+  - env:
+    - name: "DOCKER_HOST"
+      value: "tcp://localhost:2375"
+    image: "792634465463.dkr.ecr.us-east-1.amazonaws.com/hypertrail/java-8:v4.0"
+    imagePullPolicy: "IfNotPresent"
+    name: "hypertrail-java"
+    resources:
+      limits:
+        memory: "6Gi"
+        cpu: "4"
+      requests:
+        memory: "4Gi"
+        cpu: "2"
+    tty: true
+    volumeMounts:
+    - mountPath: "/var/lib/docker"
+      name: "volume-1"
+      readOnly: false
+    - mountPath: "/root"
+      name: "volume-0"
+      readOnly: false
+    workingDir: "/root"
+  - command:
+    - "/usr/local/bin/jenkins-agent"
+    env:
+    - name: "JENKINS_SECRET"
+      value: "********"
+    - name: "JENKINS_TUNNEL"
+      value: "realtime-headless.runway.ci:50000"
+    - name: "JENKINS_AGENT_NAME"
+      value: "hypertrail-java-h9vcb"
+    - name: "DOCKER_HOST"
+      value: "tcp://localhost:2375"
+    - name: "REMOTING_OPTS"
+      value: "-noReconnectAfter 1d"
+    - name: "JENKINS_NAME"
+      value: "hypertrail-java-h9vcb"
+    - name: "JENKINS_AGENT_WORKDIR"
+      value: "/root"
+    - name: "JENKINS_URL"
+      value: "http://realtime-headless.runway.ci:8080/"
+    image: "792634465463.dkr.ecr.us-east-1.amazonaws.com/fcp-inbound-agent:4.13.3.1-jdk11-docker"
+    imagePullPolicy: "IfNotPresent"
+    name: "jnlp"
+    resources:
+      limits:
+        memory: "12Gi"
+        cpu: "6"
+      requests:
+        memory: "10Gi"
+        cpu: "4"
+    tty: true
+    volumeMounts:
+    - mountPath: "/var/lib/docker"
+      name: "volume-1"
+      readOnly: false
+    - mountPath: "/root"
+      name: "volume-0"
+      readOnly: false
+    workingDir: "/root"
+  hostNetwork: false
+  nodeSelector:
+    worker-type: "general"
+  restartPolicy: "Never"
+  volumes:
+  - emptyDir:
+      medium: ""
+    name: "volume-0"
+  - emptyDir:
+      medium: ""
+    name: "volume-1"
+  - emptyDir:
+      medium: ""
+    name: "workspace-volume"
+
+Running on hypertrail-java-h9vcb in /root/workspace/hypertrail-staging-FCP-new
+[Pipeline] {
+[Pipeline] container
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Git Branch checkout)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ echo /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8.0-amazon-corretto/bin
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8.0-amazon-corretto/bin
+[Pipeline] echo
+0
+[Pipeline] dir
+Running in /root/workspace/hypertrail-staging-FCP-new/activity-serv
+[Pipeline] {
+[Pipeline] git
+The recommended git tool is: NONE
+using credential baghelgit
+Warning: JENKINS-30600: special launcher org.csanchez.jenkins.plugins.kubernetes.pipeline.ContainerExecDecorator$1@453da788; decorates RemoteLauncher[hudson.remoting.Channel@33d9ada:JNLP4-connect connection from ip-10-254-180-12.ec2.internal/10.254.180.12:49938] will be ignored (a typical symptom is the Git executable not being run inside a designated container)
+Cloning the remote Git repository
+Cloning repository https://github.com/freshdesk/activity-serv.git
+ > git init /root/workspace/hypertrail-staging-FCP-new/activity-serv # timeout=10
+Fetching upstream changes from https://github.com/freshdesk/activity-serv.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+using GIT_ASKPASS to set credentials baghel github with access token
+ > git fetch --tags --force --progress -- https://github.com/freshdesk/activity-serv.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+Checking out Revision d2ed8efda76b52774651d14983e0a6f67305188e (refs/remotes/origin/master)
+Commit message: "Update push-conf-files-s3.sh"
+ > git config remote.origin.url https://github.com/freshdesk/activity-serv.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f d2ed8efda76b52774651d14983e0a6f67305188e # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master d2ed8efda76b52774651d14983e0a6f67305188e # timeout=10
+ > git rev-list --no-walk d2ed8efda76b52774651d14983e0a6f67305188e # timeout=10
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Config Git Branch checkout)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ echo /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8.0-amazon-corretto/bin
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/jvm/java-1.8.0-amazon-corretto/bin
+[Pipeline] echo
+0
+[Pipeline] dir
+Running in /root/workspace/hypertrail-staging-FCP-new/activity-serv-configs
+[Pipeline] {
+[Pipeline] git
+The recommended git tool is: NONE
+using credential baghelgit
+Warning: JENKINS-30600: special launcher org.csanchez.jenkins.plugins.kubernetes.pipeline.ContainerExecDecorator$1@11e73983; decorates RemoteLauncher[hudson.remoting.Channel@33d9ada:JNLP4-connect connection from ip-10-254-180-12.ec2.internal/10.254.180.12:49938] will be ignored (a typical symptom is the Git executable not being run inside a designated container)
+Cloning the remote Git repository
+Avoid second fetch
+Checking out Revision 90dd6b6add7f14b554b6f202446fee1c30b4e6b9 (refs/remotes/origin/master)
+Commit message: "Update push-conf-files-s3.sh"
+Cloning repository https://github.com/freshdesk/activity-serv-configs.git
+ > git init /root/workspace/hypertrail-staging-FCP-new/activity-serv-configs # timeout=10
+Fetching upstream changes from https://github.com/freshdesk/activity-serv-configs.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+using GIT_ASKPASS to set credentials baghel github with access token
+ > git fetch --tags --force --progress -- https://github.com/freshdesk/activity-serv-configs.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/freshdesk/activity-serv-configs.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 90dd6b6add7f14b554b6f202446fee1c30b4e6b9 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master 90dd6b6add7f14b554b6f202446fee1c30b4e6b9 # timeout=10
+ > git rev-list --no-walk 90dd6b6add7f14b554b6f202446fee1c30b4e6b9 # timeout=10
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Restart Importer)
+Stage "Restart Importer" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // podTemplate
+[Pipeline] End of Pipeline
+Also:   org.jenkinsci.plugins.workflow.actions.ErrorAction$ErrorId: 07934ccb-1ead-40c5-a53c-ea52149e5ebe
+groovy.lang.MissingPropertyException: No such property: DEST_PATH for class: groovy.lang.Binding
+	at groovy.lang.Binding.getVariable(Binding.java:63)
+	at org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SandboxInterceptor.onGetProperty(SandboxInterceptor.java:285)
+	at org.kohsuke.groovy.sandbox.impl.Checker$7.call(Checker.java:375)
+	at org.kohsuke.groovy.sandbox.impl.Checker.checkedGetProperty(Checker.java:379)
+	at org.kohsuke.groovy.sandbox.impl.Checker.checkedGetProperty(Checker.java:355)
+	at org.kohsuke.groovy.sandbox.impl.Checker.checkedGetProperty(Checker.java:355)
+	at org.kohsuke.groovy.sandbox.impl.Checker.checkedGetProperty(Checker.java:355)
+	at com.cloudbees.groovy.cps.sandbox.SandboxInvoker.getProperty(SandboxInvoker.java:29)
+	at org.jenkinsci.plugins.workflow.cps.LoggingInvoker.getProperty(LoggingInvoker.java:133)
+	at com.cloudbees.groovy.cps.impl.PropertyAccessBlock.rawGet(PropertyAccessBlock.java:20)
+	at WorkflowScript.run(WorkflowScript:78)
+	at ___cps.transform___(Native Method)
+	at com.cloudbees.groovy.cps.impl.PropertyishBlock$ContinuationImpl.get(PropertyishBlock.java:73)
+	at com.cloudbees.groovy.cps.LValueBlock$GetAdapter.receive(LValueBlock.java:30)
+	at com.cloudbees.groovy.cps.impl.PropertyishBlock$ContinuationImpl.fixName(PropertyishBlock.java:65)
+	at jdk.internal.reflect.GeneratedMethodAccessor493.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at com.cloudbees.groovy.cps.impl.ContinuationPtr$ContinuationImpl.receive(ContinuationPtr.java:72)
+	at com.cloudbees.groovy.cps.impl.ConstantBlock.eval(ConstantBlock.java:21)
+	at com.cloudbees.groovy.cps.Next.step(Next.java:83)
+	at com.cloudbees.groovy.cps.Continuable.run0(Continuable.java:147)
+	at org.jenkinsci.plugins.workflow.cps.SandboxContinuable.access$001(SandboxContinuable.java:17)
+	at org.jenkinsci.plugins.workflow.cps.SandboxContinuable.run0(SandboxContinuable.java:49)
+	at org.jenkinsci.plugins.workflow.cps.CpsThread.runNextChunk(CpsThread.java:180)
+	at org.jenkinsci.plugins.workflow.cps.CpsThreadGroup.run(CpsThreadGroup.java:422)
+	at org.jenkinsci.plugins.workflow.cps.CpsThreadGroup$2.call(CpsThreadGroup.java:330)
+	at org.jenkinsci.plugins.workflow.cps.CpsThreadGroup$2.call(CpsThreadGroup.java:294)
+	at org.jenkinsci.plugins.workflow.cps.CpsVmExecutorService.lambda$wrap$4(CpsVmExecutorService.java:140)
+	at java.base/java.util.concurrent.FutureTask.run(Unknown Source)
+	at hudson.remoting.SingleLaneExecutorService$1.run(SingleLaneExecutorService.java:139)
+	at jenkins.util.ContextResettingExecutorService$1.run(ContextResettingExecutorService.java:28)
+	at jenkins.security.ImpersonatingExecutorService$1.run(ImpersonatingExecutorService.java:68)
+	at jenkins.util.ErrorLoggingExecutorService.lambda$wrap$0(ErrorLoggingExecutorService.java:51)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.base/java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.jenkinsci.plugins.workflow.cps.CpsVmExecutorService$1.call(CpsVmExecutorService.java:53)
+	at org.jenkinsci.plugins.workflow.cps.CpsVmExecutorService$1.call(CpsVmExecutorService.java:50)
+	at org.codehaus.groovy.runtime.GroovyCategorySupport$ThreadCategoryInfo.use(GroovyCategorySupport.java:136)
+	at org.codehaus.groovy.runtime.GroovyCategorySupport.use(GroovyCategorySupport.java:275)
+	at org.jenkinsci.plugins.workflow.cps.CpsVmExecutorService.lambda$categoryThreadFactory$0(CpsVmExecutorService.java:50)
+	at java.base/java.lang.Thread.run(Unknown Source)
+Finished: FAILURE
